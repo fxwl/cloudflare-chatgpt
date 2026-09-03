@@ -1,15 +1,15 @@
 {
   "name": "cloudflare-chatgpt",
-  "version": "1.0.0",
-  "description": "Cloudflare official Skills packaged for ChatGPT Web, with optional references to existing Cloudflare MCP workspace apps.",
+  "version": "1.1.0",
+  "description": "Cloudflare official Skills packaged for ChatGPT Web, with optional live access through one existing Cloudflare MCP workspace app.",
   "author": {
     "name": "fxwl"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Cloudflare",
-    "shortDescription": "Cloudflare platform guidance for ChatGPT",
-    "longDescription": "Use Cloudflare's official Skills for Workers, Pages, D1, R2, Durable Objects, Agents SDK, Email Service, Wrangler, Cloudflare One, web performance, and related platform workflows. Optional live Cloudflare account access can be attached later through existing ChatGPT workspace apps without making the plugin Desktop-only.",
+    "shortDescription": "Cloudflare Skills and optional live MCP access",
+    "longDescription": "Use Cloudflare's official Skills for Workers, Pages, D1, R2, Durable Objects, Agents SDK, Email Service, Wrangler, Cloudflare One, web performance, and related platform workflows. Live account access can be attached through one ChatGPT workspace app connected to Cloudflare's primary Code Mode MCP gateway.",
     "developerName": "Cloudflare / fxwl packaging",
     "category": "Developer Tools",
     "capabilities": [
