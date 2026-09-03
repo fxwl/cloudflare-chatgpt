@@ -5,7 +5,7 @@
   },
   "plugins": [
     {
-      "name": "cloudflare",
+      "name": "cloudflare-chatgpt",
       "source": {
         "source": "local",
         "path": "./plugins/cloudflare"
