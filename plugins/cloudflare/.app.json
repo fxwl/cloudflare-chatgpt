@@ -1,0 +1,8 @@
+{
+  "apps": {
+    "cloudflare": {
+      "id": "asdk_app_6a992c5babb4819198b296955cbbca67",
+      "required": true
+    }
+  }
+}
