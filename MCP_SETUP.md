@@ -1,24 +1,26 @@
 # Cloudflare MCP setup for ChatGPT Web
 
-ChatGPT Web should not consume Cloudflare's MCP servers from `mcp.json` or `.mcp.json` inside this plugin, because imported plugins that declare MCP servers directly are marked **Desktop only**.
+For ChatGPT Web, keep MCP configuration out of `mcp.json`, `.mcp.json`, and inline server declarations. Imported plugins that directly declare MCP servers are labeled **Desktop only**.
 
-Instead, create these MCP endpoints as ChatGPT workspace apps, then reference their existing app IDs from this plugin.
+Use one existing ChatGPT workspace app instead.
 
-## Recommended Cloudflare MCP apps
+## Create one Cloudflare workspace app
 
-| App reference name | MCP endpoint | Authentication |
-|---|---|---|
-| `cloudflare` | `https://mcp.cloudflare.com/mcp` | OAuth |
-| `cloudflare-docs` | `https://docs.mcp.cloudflare.com/mcp` | No auth |
-| `cloudflare-bindings` | `https://bindings.mcp.cloudflare.com/mcp` | OAuth |
-| `cloudflare-builds` | `https://builds.mcp.cloudflare.com/mcp` | OAuth |
-| `cloudflare-observability` | `https://observability.mcp.cloudflare.com/mcp` | OAuth |
+Create a custom MCP app in the ChatGPT workspace with:
 
-Create each endpoint as a custom ChatGPT app in your workspace and complete its authentication/setup.
+| Setting | Value |
+|---|---|
+| Name | `Cloudflare` |
+| MCP endpoint | `https://mcp.cloudflare.com/mcp` |
+| Authentication | OAuth |
 
-## Find the app IDs
+Cloudflare's primary MCP is designed as a token-efficient gateway for the entire Cloudflare API. It also includes Cloudflare developer-documentation search, so a separate docs app is not required for the normal ChatGPT workflow.
 
-After each app exists, copy its app ID. Supported app IDs for plugin references begin with one of:
+Cloudflare also publishes specialized MCP servers for bindings, builds, and observability. They can still be added separately if a future workflow specifically needs their specialized tools, but this plugin deliberately uses the primary gateway to keep setup to one app.
+
+## Get the app ID
+
+After creating the app, copy its ChatGPT app ID. Valid plugin app references begin with one of:
 
 - `asdk_app_`
 - `connector_`
@@ -26,28 +28,28 @@ After each app exists, copy its app ID. Supported app IDs for plugin references 
 
 Do not use a `plugin_...` ID.
 
-## Attach the apps to this plugin
+## Attach it to the plugin
 
-Copy `plugins/cloudflare/.app.example.json` to `plugins/cloudflare/.app.json` and replace every placeholder ID with the real app ID.
-
-Then edit:
-
-`plugins/cloudflare/.codex-plugin/plugin.json`
-
-and add this top-level field:
+1. Copy `plugins/cloudflare/.app.example.json` to `plugins/cloudflare/.app.json`.
+2. Replace `asdk_app_REPLACE_CLOUDFLARE` with the real app ID.
+3. Add this top-level field to `plugins/cloudflare/.codex-plugin/plugin.json`:
 
 ```json
 "apps": "./.app.json"
 ```
 
-The five app references are intentionally optional (`required: false`), so the Cloudflare Skills continue to work even when a particular MCP app is unavailable.
+The app reference should be marked `required: true` once attached, because this repository is intended to provide both Cloudflare Skills and live Cloudflare MCP access as one plugin.
 
-## Important
+After committing those two changes, use **Sync now** on the imported marketplace in ChatGPT.
 
-Do not add any of the following if ChatGPT Web support is required:
+## Why this cannot be fully zero-click from GitHub
 
-- `mcp.json`
-- `.mcp.json`
-- inline MCP server declarations in the plugin manifest
+GitHub marketplace sync imports plugin content, but it does not create a ChatGPT workspace app, grant access to a provider, or perform Cloudflare OAuth. `.app.json` can only reference an app that already exists in the workspace.
 
-Those forms cause an imported plugin to be labeled Desktop only.
+Therefore the minimum one-time setup for ChatGPT Web is:
+
+1. Create one Cloudflare workspace app.
+2. Complete Cloudflare OAuth.
+3. Put its app ID into this repository once.
+
+After that, plugin and Skills updates can sync automatically from GitHub.
