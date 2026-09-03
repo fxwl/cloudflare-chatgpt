@@ -1,15 +1,16 @@
 {
   "name": "cloudflare-chatgpt",
-  "version": "1.1.0",
-  "description": "Cloudflare official Skills packaged for ChatGPT Web, with optional live access through one existing Cloudflare MCP workspace app.",
+  "version": "1.2.0",
+  "description": "Cloudflare official Skills packaged for ChatGPT Web with live access through a linked Cloudflare MCP workspace app.",
   "author": {
     "name": "fxwl"
   },
   "skills": "./skills/",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Cloudflare",
-    "shortDescription": "Cloudflare Skills and optional live MCP access",
-    "longDescription": "Use Cloudflare's official Skills for Workers, Pages, D1, R2, Durable Objects, Agents SDK, Email Service, Wrangler, Cloudflare One, web performance, and related platform workflows. Live account access can be attached through one ChatGPT workspace app connected to Cloudflare's primary Code Mode MCP gateway.",
+    "shortDescription": "Cloudflare Skills with live MCP access",
+    "longDescription": "Use Cloudflare's official Skills for Workers, Pages, D1, R2, Durable Objects, Agents SDK, Email Service, Wrangler, Cloudflare One, web performance, and related platform workflows, together with live account access through the linked Cloudflare Code Mode MCP workspace app.",
     "developerName": "Cloudflare / fxwl packaging",
     "category": "Developer Tools",
     "capabilities": [
@@ -19,6 +20,7 @@
     "privacyPolicyURL": "https://www.cloudflare.com/privacypolicy/",
     "termsOfServiceURL": "https://www.cloudflare.com/website-terms/",
     "defaultPrompt": [
+      "List my Cloudflare Workers",
       "Build a Cloudflare Worker with the right Wrangler setup",
       "Review this Cloudflare project for production best practices",
       "Help me configure Cloudflare Email Service"
