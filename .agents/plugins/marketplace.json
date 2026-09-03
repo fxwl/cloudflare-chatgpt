@@ -1,14 +1,16 @@
 {
-  "$schema": "https://agent-plugins.org/schemas/1.0.0/marketplace.schema.json",
   "name": "cloudflare-chatgpt",
-  "owner": {
-    "name": "fxwl"
+  "interface": {
+    "displayName": "Cloudflare for ChatGPT"
   },
   "plugins": [
     {
       "name": "cloudflare",
-      "source": "../../plugins/cloudflare",
-      "description": "Cloudflare official Skills packaged for ChatGPT Web, with optional workspace MCP app references."
+      "source": {
+        "source": "local",
+        "path": "./plugins/cloudflare"
+      },
+      "category": "Developer Tools"
     }
   ]
 }
