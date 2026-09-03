@@ -1,0 +1,48 @@
+name: Sync Cloudflare Skills
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * *"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/sync-cloudflare-skills.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out this repository
+        uses: actions/checkout@v4
+
+      - name: Clone Cloudflare official Skills
+        run: |
+          rm -rf /tmp/cloudflare-skills
+          git clone --depth=1 https://github.com/cloudflare/skills.git /tmp/cloudflare-skills
+
+      - name: Sync upstream files
+        run: |
+          rm -rf plugins/cloudflare/skills
+          mkdir -p plugins/cloudflare
+          cp -a /tmp/cloudflare-skills/skills plugins/cloudflare/skills
+          cp /tmp/cloudflare-skills/logo.svg plugins/cloudflare/logo.svg
+          cp /tmp/cloudflare-skills/LICENSE plugins/cloudflare/LICENSE
+          git -C /tmp/cloudflare-skills rev-parse HEAD > plugins/cloudflare/UPSTREAM_COMMIT
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add plugins/cloudflare/skills plugins/cloudflare/logo.svg plugins/cloudflare/LICENSE plugins/cloudflare/UPSTREAM_COMMIT
+          if git diff --cached --quiet; then
+            echo "Already up to date."
+            exit 0
+          fi
+          UPSTREAM=$(cat plugins/cloudflare/UPSTREAM_COMMIT)
+          git commit -m "Sync Cloudflare Skills ${UPSTREAM}"
+          git push
