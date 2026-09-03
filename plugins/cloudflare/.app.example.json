@@ -2,23 +2,7 @@
   "apps": {
     "cloudflare": {
       "id": "asdk_app_REPLACE_CLOUDFLARE",
-      "required": false
-    },
-    "cloudflare-docs": {
-      "id": "asdk_app_REPLACE_CLOUDFLARE_DOCS",
-      "required": false
-    },
-    "cloudflare-bindings": {
-      "id": "asdk_app_REPLACE_CLOUDFLARE_BINDINGS",
-      "required": false
-    },
-    "cloudflare-builds": {
-      "id": "asdk_app_REPLACE_CLOUDFLARE_BUILDS",
-      "required": false
-    },
-    "cloudflare-observability": {
-      "id": "asdk_app_REPLACE_CLOUDFLARE_OBSERVABILITY",
-      "required": false
+      "required": true
     }
   }
 }
