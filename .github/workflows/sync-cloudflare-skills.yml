@@ -13,6 +13,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: sync-cloudflare-skills
+  cancel-in-progress: false
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -34,7 +38,7 @@ jobs:
           cp /tmp/cloudflare-skills/LICENSE plugins/cloudflare/LICENSE
           git -C /tmp/cloudflare-skills rev-parse HEAD > plugins/cloudflare/UPSTREAM_COMMIT
 
-      - name: Commit changes
+      - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -45,4 +49,5 @@ jobs:
           fi
           UPSTREAM=$(cat plugins/cloudflare/UPSTREAM_COMMIT)
           git commit -m "Sync Cloudflare Skills ${UPSTREAM}"
-          git push
+          git pull --rebase origin main
+          git push origin main
