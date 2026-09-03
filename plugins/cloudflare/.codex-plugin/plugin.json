@@ -1,5 +1,5 @@
 {
-  "name": "cloudflare",
+  "name": "cloudflare-chatgpt",
   "version": "1.0.0",
   "description": "Cloudflare official Skills packaged for ChatGPT Web, with optional references to existing Cloudflare MCP workspace apps.",
   "author": {
